@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>    
+    </head>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+       <h1>Calculate principal Amount</h1>
+       <label>Start Date:</label>
+       <input type="date"  id="startdate"><br><br>
+       <label>End Date:</label>
+       <input type="date" id="enddate"><br><br>
+       <label>principal amount</label>
+       <input type="text" id="prin"><br><br>
+       <label>interst</label>
+       <input type="text" id="intrest"><br><br>
+
+       
+       <input type="button" value="submit" onclick="add()">
+       </form>
+        <script type="text/javascript">
+        function add()
+        {
+            debugger;
+         var input=document.getElementById('startdate').value;
+         var d=new Date(input);
+         var sd=d.getDate();
+         var sm=d.getMonth()+1;
+         var sy=d.getFullYear();
+         var enddate=document.getElementById('enddate').value;
+         var a=new Date(enddate);
+         var ed=a.getDate();
+         var em=a.getMonth()+1;
+         var ey=a.getFullYear();
+         var total;
+         if(sy==ey)
+         {
+             if(sd>ed)
+             {
+                var newdate=(30-sd)+ed;
+                 sm=sm+1;
+                 var days=(em-sm)*30;
+                 total=newdate+days;
+             }
+             else
+             {
+                 newdate=ed-sd;
+                 days=(em-sm)*30;
+                 total=newdate+days;
+
+             }
+          }   
+         else if(ey>sy)
+         {
+            if (sd>ed) 
+            {
+                newdate=(30-sd)+ed;
+                sm=sm+1;
+            }
+            else
+            {
+             newdate=(ed-sd);
+            }
+            if(sm>em)
+            {
+                days=((12-sm)+em)*30;
+                newdate=(newdate+days);
+                sy=sy+1;
+            }
+            else
+            {
+                days=(em-sm)*30;
+                newdate=newdate+days;
+
+            }
+            var nodate=360*(ey-sy);
+            var newdays=newdate+nodate;
+            total=newdays
+         }    
+         else
+         {
+             document.write("invalid")
+         }
+        var interst=parseFloat(document.getElementById("intrest").value)
+        var pa=parseFloat(document.getElementById("prin").value)
+        if(interst==null)
+        {
+            var newintre=interst;
+        }
+        else
+        {
+            if(pa>5000)
+            {
+                newintre=2;
+            }
+            else
+            {
+                newintre=3;
+            }
+        }
+        debugger;
+        if(total>360)
+        {
+            var noyears=parseInt(total/360);
+            for(var i=0;i<noyears;i++)
+            {
+                pa=pa+((pa/100)*newintre)*12
+            }
+            var remainMonths=(total-(360*noyears))/30
+            pa=pa+(remainMonths*((pa/100)*newintre))
+            document.write(pa);
+        }
+        else{
+            var amount=(pa/100)*newintre;
+            var totalinter=(total/30)*amount;
+            debugger;
+            var anser=pa+totalinter;
+            document.write(anser);
+        }
+            
+            
+        }
+        
+       
+       </script>
+    </body>
+</html>
